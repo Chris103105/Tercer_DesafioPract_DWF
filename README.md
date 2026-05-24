@@ -2,6 +2,12 @@
 
 Este proyecto es una aplicación web completa (Backend + Frontend) desarrollada para gestionar el ciclo académico. Implementa una arquitectura robusta por capas (Controller, Service, Repository) utilizando **Spring Boot**, seguridad mediante **JWT**, y una interfaz de usuario moderna tipo *Single Page Application* (SPA) construida con ** JavaScript**.
 
+## Equipo de Desarrollo
+Proyecto desarrollado  por:
+
+Christopher Steven  Jovel Beltran JB251834    
+Odaly Rachel Cruz Franco CF252175
+
 ##  Características Principales (Nuevas Implementaciones)
 
 * **Seguridad y Autenticación:** Sistema de Login y Registro de usuarios con encriptación de contraseñas y generación de tokens **JWT (JSON Web Tokens)**.
@@ -95,9 +101,3 @@ Importante: Debes ejecutar el frontend utilizando la extensión Live Server de V
 
 Ejecuta la clase principal DesafioPract1Jb251834Application.
 
-
-##Equipo de Desarrollo
-Proyecto desarrollado colaborativamente por:
-
-Christopher Steven  Jovel Beltran 
-Odaly Rachel Cruz Franco
