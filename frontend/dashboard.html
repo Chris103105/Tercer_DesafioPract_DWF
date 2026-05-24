@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Sistema Escolar</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+
+    <nav class="top-nav">
+        <h2>SISTEMA ESCOLAR</h2>
+        <button class="btn-logout" onclick="cerrarSesion()">Cerrar Sesión</button>
+    </nav>
+
+    <div class="main-content">
+        
+        <div id="seccionMenu" class="grid-menu">
+            <div class="card-menu" onclick="mostrarSeccion('profesores')">
+                <i class="fa-solid fa-user-tie icono-tarjeta"></i>
+                <h3>Profesores</h3>
+                <p>Gestiona la plantilla docente y sus perfiles de sistema</p>
+            </div>
+            
+            <div class="card-menu" onclick="mostrarSeccion('alumnos')">
+                <i class="fa-solid fa-user-graduate icono-tarjeta"></i>
+                <h3>Alumnos</h3>
+                <p>Base de datos general de los estudiantes matriculados</p>
+            </div>
+            
+            <div class="card-menu" onclick="mostrarSeccion('materias')">
+                <i class="fa-solid fa-book-open icono-tarjeta"></i>
+                <h3>Materias</h3>
+                <p>Mantenimiento de asignaturas y profesores encargados</p>
+            </div>
+            
+            <div class="card-menu" onclick="mostrarSeccion('inscripciones')">
+                <i class="fa-solid fa-clipboard-list icono-tarjeta"></i>
+                <h3>Inscripciones</h3>
+                <p>Asignación de estudiantes a los diferentes cursos activos</p>
+            </div>
+            
+            <div class="card-menu" onclick="mostrarSeccion('notas')">
+                <i class="fa-solid fa-chart-line icono-tarjeta"></i>
+                <h3>Notas</h3>
+                <p>Registro y control de calificaciones del ciclo académico</p>
+            </div>
+        </div>
+
+        <div id="seccionProfesores" class="glass-card seccion-oculta">
+            <button class="btn-volver" onclick="mostrarSeccion('menu')">⬅ Volver al Menú</button>
+            <div class="header-seccion">
+                <h3>Lista de Profesores</h3>
+                <button class="btn-nuevo" onclick="abrirModalProfesor()">+ Nuevo Profesor</button>
+            </div>
+            <table>
+                <thead><tr><th>ID</th><th>Nombre</th><th>Acciones</th></tr></thead>
+                <tbody id="tablaProfesores"></tbody>
+            </table>
+        </div>
+
+        <div id="seccionAlumnos" class="glass-card seccion-oculta">
+            <button class="btn-volver" onclick="mostrarSeccion('menu')">⬅ Volver al Menú</button>
+            <div class="header-seccion">
+                <h3>Lista de Alumnos</h3>
+                <button class="btn-nuevo" onclick="abrirModalAlumno()">+ Nuevo Alumno</button>
+            </div>
+            <table>
+                <thead><tr><th>ID</th><th>Nombre</th><th>Apellido</th><th>Acciones</th></tr></thead>
+                <tbody id="tablaAlumnos"></tbody>
+            </table>
+        </div>
+
+        <div id="seccionMaterias" class="glass-card seccion-oculta">
+            <button class="btn-volver" onclick="mostrarSeccion('menu')">⬅ Volver al Menú</button>
+            <div class="header-seccion">
+                <h3>Lista de Materias</h3>
+                <button class="btn-nuevo" onclick="abrirModalMateria()">+ Nueva Materia</button>
+            </div>
+            <table>
+                <thead><tr><th>ID</th><th>Materia</th><th>Profesor Asignado</th><th>Acciones</th></tr></thead>
+                <tbody id="tablaMaterias"></tbody>
+            </table>
+        </div>
+
+        <div id="seccionInscripciones" class="glass-card seccion-oculta">
+            <button class="btn-volver" onclick="mostrarSeccion('menu')">⬅ Volver al Menú</button>
+            <div class="header-seccion">
+                <h3>Registro de Inscripciones</h3>
+                <button class="btn-nuevo" onclick="abrirModalInscripcion()">+ Nueva Inscripción</button>
+            </div>
+            <table>
+                <thead><tr><th>ID</th><th>Alumno</th><th>Materia</th><th>Acciones</th></tr></thead>
+                <tbody id="tablaInscripciones"></tbody>
+            </table>
+        </div>
+        
+        <div id="seccionNotas" class="glass-card seccion-oculta">
+            <button class="btn-volver" onclick="mostrarSeccion('menu')">⬅ Volver al Menú</button>
+            <div class="header-seccion">
+                <h3>Registro de Notas</h3>
+                <div style="display: flex; gap: 15px; align-items: center;">
+                    <select id="filtroMateria" class="modal-input" style="margin: 0; padding: 8px; width: 200px;" onchange="aplicarFiltroNotas()">
+                        <option value="TODAS">Todas las materias</option>
+                    </select>
+                    <button class="btn-nuevo" onclick="abrirModalNota()">+ Nueva Nota</button>
+                </div>
+            </div>
+            <table>
+                <thead><tr><th>ID</th><th>Alumno</th><th>Materia</th><th>Nota</th><th>Acciones</th></tr></thead>
+                <tbody id="tablaNotas"></tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <div id="modalProfesor" class="modal-overlay">
+        <div class="modal-content">
+            <h3 id="tituloModalProfesor" class="texto-neon">Agregar Profesor</h3>
+            <input type="text" id="nombreProfesor" class="modal-input" placeholder="Nombre completo" required>
+            <div class="modal-botones">
+                <button onclick="guardarProfesor()" class="btn-guardar">Guardar</button>
+                <button onclick="cerrarModales()" class="btn-cancelar">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalAlumno" class="modal-overlay">
+        <div class="modal-content">
+            <h3 id="tituloModalAlumno" class="texto-neon">Agregar Alumno</h3>
+            <input type="text" id="nombreAlumno" class="modal-input" placeholder="Nombres" required>
+            <input type="text" id="apellidoAlumno" class="modal-input" placeholder="Apellidos" required>
+            <div class="modal-botones">
+                <button onclick="guardarAlumno()" class="btn-guardar">Guardar</button>
+                <button onclick="cerrarModales()" class="btn-cancelar">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalMateria" class="modal-overlay">
+        <div class="modal-content">
+            <h3 id="tituloModalMateria" class="texto-neon">Agregar Materia</h3>
+            <input type="text" id="nombreMateria" class="modal-input" placeholder="Nombre de la Materia" required>
+            <select id="selectProfesor" class="modal-input"><option value="">Seleccionar Profesor...</option></select>
+            <div class="modal-botones">
+                <button onclick="guardarMateria()" class="btn-guardar">Guardar</button>
+                <button onclick="cerrarModales()" class="btn-cancelar">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalInscripcion" class="modal-overlay">
+        <div class="modal-content">
+            <h3 id="tituloModalInscripcion" class="texto-neon">Inscribir Alumno</h3>
+            <select id="selectAlumnoInsc" class="modal-input"><option value="">Seleccionar Alumno...</option></select>
+            <select id="selectMateriaInsc" class="modal-input"><option value="">Seleccionar Materia...</option></select>
+            <div class="modal-botones">
+                <button onclick="guardarInscripcion()" class="btn-guardar">Guardar</button>
+                <button onclick="cerrarModales()" class="btn-cancelar">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalNota" class="modal-overlay">
+        <div class="modal-content">
+            <h3 id="tituloModalNota" class="texto-neon">Agregar Nota</h3>
+            <select id="selectMateriaNota" class="modal-input" onchange="cargarAlumnosPorMateriaSeleccionada()"><option value="">1. Seleccionar Materia...</option></select>
+            <select id="selectAlumnoNota" class="modal-input"><option value="">2. Esperando materia...</option></select>
+            <input type="number" step="0.1" id="valorNota" class="modal-input" placeholder="Calificación (ej. 8.5)" required>
+            <div class="modal-botones">
+                <button onclick="guardarNota()" class="btn-guardar">Guardar</button>
+                <button onclick="cerrarModales()" class="btn-cancelar">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/core.js"></script>
+    <script src="js/profesores.js"></script>
+    <script src="js/alumnos.js"></script>
+    <script src="js/materias.js"></script>
+    <script src="js/inscripciones.js"></script>
+    <script src="js/notas.js"></script>
+
+</body>
+</html>

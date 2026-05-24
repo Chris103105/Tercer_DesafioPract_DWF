@@ -40,5 +40,4 @@ public class InscripcionController {
             return ResponseEntity.ok().build();
         }).orElse(ResponseEntity.notFound().build());
     }
-
 }

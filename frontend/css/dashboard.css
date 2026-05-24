@@ -1,0 +1,351 @@
+
+ 
+/* Paleta de colores globales */
+:root {
+    --bg-main: #0b0f19; /* Fondo principal súper oscuro */
+    --bg-nav: #111827; /* Gris azulado profundo para la barra superior */
+    --bg-card: #1f2937; /* Fondo de las tablas y tarjetas */
+    --accent-primary: #6366f1; /* Indigo moderno (Azul/Violeta) */
+    --accent-hover: #818cf8;
+    --text-main: #f3f4f6;
+    --text-muted: #9ca3af;
+    --border-color: rgba(255, 255, 255, 0.08);
+    --danger: #ef4444;
+    --success: #10b981;
+}
+
+/* --- RESET Y BODY --- */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden; /* Evita scroll en toda la página */
+}
+
+/* --- BARRA DE NAVEGACIÓN SUPERIOR --- */
+.top-nav {
+    background-color: var(--bg-nav);
+    height: 70px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    z-index: 10;
+}
+
+.top-nav h2 {
+    margin: 0;
+    letter-spacing: 2px;
+    font-size: 1.4rem;
+    color: var(--text-main);
+    text-shadow: 0 0 10px rgba(99, 102, 241, 0.4);
+}
+
+.btn-logout {
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--danger);
+    border: 1px solid var(--danger);
+    padding: 8px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+.btn-logout:hover {
+    background: var(--danger);
+    color: #fff;
+}
+
+/* --- ÁREA PRINCIPAL --- */
+.main-content {
+    flex: 1;
+    padding: 40px;
+    overflow-y: auto;
+    background: radial-gradient(circle at top right, #131c2f, var(--bg-main));
+}
+
+.seccion-oculta {
+    display: none !important;
+}
+/* --- CUADRÍCULA DE TARJETAS (MENÚ PRINCIPAL) --- */
+.grid-menu {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; 
+    gap: 25px; /* Reduje el espacio entre tarjetas */
+    max-width: 950px; /* Contenedor más angosto para mantener el 3 y 2 */
+    margin: 40px auto;
+}
+
+.card-menu {
+    flex: 1 1 260px; /* Ancho base más pequeño */
+    max-width: 280px; /* Límite de crecimiento más estricto */
+    background: linear-gradient(145deg, var(--bg-card), #161f2e); 
+    border: 1px solid var(--border-color);
+    border-radius: 16px; /* Bordes un poco más cerrados */
+    padding: 30px 20px; /* Menos relleno interno */
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 180px; /* Altura mucho más compacta */
+}
+
+.card-menu::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 3px;
+    background: var(--accent-primary);
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+}
+
+.card-menu:hover::before { 
+    transform: scaleX(1); 
+}
+
+.card-menu:hover {
+    transform: translateY(-8px); /* Salto más discreto */
+    border-color: var(--accent-hover);
+    box-shadow: 0 15px 35px rgba(99, 102, 241, 0.2);
+    background: linear-gradient(145deg, #1f2937, #1a2333);
+}
+
+.icono-tarjeta {
+    font-size: 2.5rem; /* Icono más pequeño y elegante */
+    margin-bottom: 15px;
+    display: block;
+    color: var(--accent-primary); 
+    filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.3)); 
+    transition: 0.3s;
+}
+
+.card-menu:hover .icono-tarjeta {
+    color: var(--text-main);
+    transform: scale(1.1);
+}
+
+.card-menu h3 {
+    color: var(--text-main);
+    font-size: 1.4rem; /* Letra más proporcionada */
+    margin-bottom: 8px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.card-menu p {
+    color: var(--text-muted);
+    font-size: 0.9rem; /* Texto descriptivo más pequeño */
+    margin: 0;
+    line-height: 1.5;
+}
+/* --- CONTENEDORES DE TABLAS --- */
+.glass-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    animation: fadeIn 0.4s ease-in-out;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.header-seccion {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 20px;
+    margin-bottom: 25px;
+}
+
+.header-seccion h3 { 
+    margin: 0; 
+    font-size: 1.4rem; 
+}
+
+/* --- BOTÓN VOLVER --- */
+.btn-volver {
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid var(--border-color);
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: 0.2s;
+}
+.btn-volver:hover {
+    color: #fff;
+    background: rgba(255,255,255,0.05);
+}
+
+/* --- TABLAS --- */
+table { 
+    width: 100%; 
+    border-collapse: collapse; 
+}
+
+th, td { 
+    padding: 16px 15px; 
+    text-align: left; 
+    border-bottom: 1px solid var(--border-color); 
+}
+
+th { 
+    color: var(--text-muted); 
+    font-size: 0.85rem; 
+    letter-spacing: 1px; 
+}
+
+tr:hover { 
+    background-color: rgba(255, 255, 255, 0.03); 
+}
+
+/* --- BOTONES DE ACCIONES --- */
+.btn-nuevo { 
+    background: var(--accent-primary); 
+    color: white; 
+    border: none; 
+    padding: 10px 22px; 
+    border-radius: 8px; 
+    cursor: pointer; 
+    font-weight: bold; 
+    transition: 0.2s; 
+}
+.btn-nuevo:hover { 
+    background: var(--accent-hover); 
+    transform: translateY(-2px); 
+}
+
+.btn-editar { 
+    background: rgba(16, 185, 129, 0.1); 
+    color: var(--success); 
+    border: 1px solid var(--success); 
+    padding: 6px 14px; 
+    border-radius: 6px; 
+    cursor: pointer; 
+    margin-right: 8px; 
+    transition: 0.2s; 
+}
+.btn-editar:hover { 
+    background: var(--success); 
+    color: #fff; 
+}
+
+.btn-borrar { 
+    background: rgba(239, 68, 68, 0.1); 
+    color: var(--danger); 
+    border: 1px solid var(--danger); 
+    padding: 6px 14px; 
+    border-radius: 6px; 
+    cursor: pointer; 
+    transition: 0.2s; 
+}
+.btn-borrar:hover { 
+    background: var(--danger); 
+    color: #fff; 
+}
+
+/* --- MODALES --- */
+.modal-overlay { 
+    display: none; 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    background: rgba(0, 0, 0, 0.75); 
+    backdrop-filter: blur(4px); 
+    justify-content: center; 
+    align-items: center; 
+    z-index: 1000; 
+}
+
+.modal-content { 
+    width: 420px; 
+    background: var(--bg-nav); 
+    border: 1px solid var(--border-color); 
+    padding: 30px; 
+    border-radius: 16px; 
+}
+
+.texto-neon { 
+    color: #fff; 
+    margin-top: 0; 
+    margin-bottom: 25px; 
+    text-align: center; 
+    font-size: 1.3rem; 
+}
+
+.modal-input { 
+    width: 100%; 
+    padding: 14px; 
+    margin-bottom: 20px; 
+    background: rgba(0, 0, 0, 0.25); 
+    border: 1px solid var(--border-color); 
+    border-radius: 8px; 
+    color: #fff; 
+    outline: none; 
+    box-sizing: border-box; 
+}
+
+.modal-input:focus { 
+    border-color: var(--accent-primary); 
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2); 
+}
+
+.modal-input option { 
+    background-color: var(--bg-nav); 
+}
+
+.modal-botones { 
+    display: flex; 
+    gap: 15px; 
+}
+
+.btn-guardar { 
+    flex: 1; 
+    background: var(--accent-primary); 
+    color: white; 
+    border: none; 
+    padding: 12px; 
+    border-radius: 8px; 
+    cursor: pointer; 
+    font-weight: bold; 
+}
+.btn-guardar:hover { 
+    background: var(--accent-hover); 
+}
+
+.btn-cancelar { 
+    flex: 1; 
+    background: transparent; 
+    color: var(--text-muted); 
+    border: 1px solid var(--border-color); 
+    padding: 12px; 
+    border-radius: 8px; 
+    cursor: pointer; 
+}
+.btn-cancelar:hover { 
+    color: #fff; 
+    background: rgba(255,255,255,0.05); 
+}
